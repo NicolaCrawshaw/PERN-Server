@@ -1,14 +1,27 @@
 version: "3"
 services:
+  db:
+    image: postgres:12.5
+    ports:
+      - "5432:5432"
+    volumes:
+      - todo-volume:/var/lib/postgressql/data
+    environment:
+      POSTGRES_PASSWORD: password
   api:
     build:
       context: .
     ports:
       - "5000:5000"
+    depends_on:
+      - db
     command: npm run start
-    volumes:
-      - .:/app
-      - /app/node_modules
+    environment:
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGPORT: 5432
+      PGDATABASE: postgres
 
 volumes:
-  todo-volumn:
+  todo-volume:
