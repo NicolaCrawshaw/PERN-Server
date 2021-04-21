@@ -14,6 +14,10 @@ const {
 app.use(cors());
 app.use(express.json()); //req.body
 
+app.get("/api", async (req, res) => {
+  res.json({ message: "Welcome to the todo app" });
+});
+
 app.get("/api/healthcheck", async (req, res) => {
   res.json({ message: "I am really healthy!" });
 });
